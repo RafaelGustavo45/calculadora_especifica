@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preço Composto</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 { margin-top: 0; color: var(--primary); }
+        .input-group { margin-bottom: 1.0rem; }
+        label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+
+        input, select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .btn-add { background: #10b981; color: white; width: 100%; margin-bottom: 1rem; }
+        .btn-calc { background: var(--primary); color: white; width: 100%; font-size: 1.1rem; }
+        .btn-remove { background: #ef4444; color: white; padding: 0.5rem; }
+
+        #result-area {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #eff6ff;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .final-price { font-size: 2rem; font-weight: 800; color: var(--primary); }
+        
+        /* Nova classe para o comparativo */
+        .comparativo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #64748b;
+            font-style: italic;
+        }
+        .compravel {
+            font-size: 1rem;
+            font-weight: 600;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Calculadora de Preço</h2>
+    
+    <div class="input-group">
+        <label>Preço Inicial (R$)</label>
+        <input type="number" id="initialPrice" placeholder="Ex: 200" step="0.01">
+        <label>Saldo (R$)</label>
+        <input type="number" id="saldo" placeholder="Ex: 400" step="0.01">
+    </div>
+
+    <div id="modifiers-container"></div>
+
+    <button class="btn btn-add" id="btnAdd" onclick="addRow()">+ Adicionar Ajuste (Máx 10)</button>
+    <button class="btn btn-calc" onclick="calculate()">Calcular Resultado</button>
+
+    <div id="result-area" style="display: none;">
+        <span>Preço Final:</span>
+        <span class="final-price" id="displayResult">R$ 0,00</span>
+        <span class="comparativo" id="displayComparativo"></span>
+        <span class="compravel" id="displayCompravel"></span>
+    </div>
+</div>
+
+<script>
+    let rowCount = 0;
+    const container = document.getElementById('modifiers-container');
+    const btnAdd = document.getElementById('btnAdd');
+
+    function addRow() {
+        if (rowCount >= 10) return;
+        rowCount++;
+        const div = document.createElement('div');
+        div.className = 'row';
+        div.innerHTML = `
+            <select class="type">
+                <option value="desconto">Desconto %</option>
+                <option value="aumento">Aumento %</option>
+            </select>
+            <input type="number" class="percent" placeholder="%" step="0.1">
+            <button class="btn btn-remove" onclick="removeRow(this)">✕</button>
+        `;
+        container.appendChild(div);
+        if (rowCount === 10) btnAdd.disabled = true;
+    }
+
+    function removeRow(btn) {
+        btn.parentElement.remove();
+        rowCount--;
+        btnAdd.disabled = false;
+    }
+
+    // A FUNÇÃO EXTRA SOLICITADA
+    function verificar_ajuste_final(preco_inicial, preco_resultante) {
+        const elemento = document.getElementById('displayComparativo');
+        
+        if (preco_inicial === preco_resultante) {
+            elemento.innerText = "sem diferença";
+        } else {
+            const a = preco_resultante / preco_inicial;
+            if (a < 1) {
+                // Se a < 1, é um desconto. Ex: 0.85 significa 15% de desconto.
+                const percentualDesconto = ((1 - a) * 100).toFixed(2);
+                elemento.innerText = `Variação: desconto real de ${percentualDesconto}%`;
+            } else {
+                // Se a > 1, é um aumento. Ex: 1.10 significa 10% de aumento.
+                const percentualAumento = ((a - 1) * 100).toFixed(2);
+                elemento.innerText = `Variação: aumento real de ${percentualAumento}%`;
+            }
+        }
+    }
+
+    function verificar_compravel(saldo_inicial, preco_resultante) {
+        const elemento = document.getElementById('displayCompravel');
+        
+        if (saldo_inicial === preco_resultante) {
+            elemento.style.color = "blue";
+            elemento.innerText = "Valor exato";
+        } else {
+            if(preco_resultante <= saldo_inicial) {
+                elemento.style.color = "green";
+                elemento.innerText = "O produto é comprável com o saldo disponível.";
+            } else {
+                elemento.style.color = "red";
+                elemento.innerText = "O produto NÃO é comprável com o saldo disponível.";
+            }
+            /*const a = preco_resultante / preco_inicial;
+            if (a < 1) {
+                // Se a < 1, é um desconto. Ex: 0.85 significa 15% de desconto.
+                const percentualDesconto = ((1 - a) * 100).toFixed(2);
+                elemento.innerText = `Variação: desconto real de ${percentualDesconto}%`;
+            } else {
+                // Se a > 1, é um aumento. Ex: 1.10 significa 10% de aumento.
+                const percentualAumento = ((a - 1) * 100).toFixed(2);
+                elemento.innerText = `Variação: aumento real de ${percentualAumento}%`;
+            } */
+        } 
+    }
+
+    function calculate() {
+        const initialPriceInput = document.getElementById('initialPrice').value;
+        const initialPrice = parseFloat(initialPriceInput);
+        const saldo = parseFloat(document.getElementById('saldo').value);
+
+        if (isNaN(initialPrice)) {
+            alert("Por favor, insira o preço inicial.");
+            return;
+        }
+
+        let finalPrice = initialPrice;
+        const rows = document.querySelectorAll('.row');
+
+        rows.forEach(row => {
+            const type = row.querySelector('.type').value;
+            const percent = parseFloat(row.querySelector('.percent').value);
+
+            if (!isNaN(percent)) {
+                if (type === 'desconto') {
+                    finalPrice *= (100 - percent) / 100;
+                } else {
+                    finalPrice *= (100 + percent) / 100;
+                }
+            }
+        });
+
+        // Exibição do Preço Final
+        const resultArea = document.getElementById('result-area');
+        const displayResult = document.getElementById('displayResult');
+        
+        resultArea.style.display = 'flex';
+        displayResult.innerText = `R$ ${finalPrice.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        // Chamada da função de comparação
+        verificar_ajuste_final(initialPrice, finalPrice);
+        verificar_compravel(saldo, finalPrice);
+    }
+</script>
+
+</body>
+</html>
