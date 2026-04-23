@@ -1,0 +1,98 @@
+:root {
+    --primary: #2563eb;
+    --bg: #f8fafc;
+    --text: #1e293b;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+h2 { 
+    margin-top: 0; color: var(--primary);
+}
+
+.input-group { margin-bottom: 1.0rem; }
+    label { display: block; margin-bottom: 0.5rem; font-weight: 600; 
+}
+
+input, select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+        
+}
+
+.btn {
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    transition: opacity 0.2s;
+}
+
+.btn-add { 
+    background: #10b981; color: white; width: 100%; margin-bottom: 1rem;
+}
+.btn-calc {
+    background: var(--primary); color: white; width: 100%; font-size: 1.1rem;
+}
+.btn-remove {
+    background: #ef4444; color: white; padding: 0.5rem;
+}
+
+#result-area {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #eff6ff;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.final-price { font-size: 2rem; font-weight: 800; color: var(--primary); }
+        
+        /* Nova classe para o comparativo */
+.comparativo {
+    font-size: 1rem;
+     font-weight: 600;
+     color: #64748b;
+    font-style: italic;
+ }
+.compravel {
+     font-size: 1rem;
+    font-weight: 600;
+    font-style: italic;
+}
