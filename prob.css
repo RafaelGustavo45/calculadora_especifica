@@ -1,0 +1,16 @@
+body { background-color: #f1f5f9; padding-top: 30px; }
+        .card { border-radius: 12px; padding: 20px; }
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #eef2ff;
+            border-radius: 8px;
+            border-left: 6px solid #4f46e5;
+            display: none;
+        }
+        .highlight-prob {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #4f46e5;
+            display: block;
+        }

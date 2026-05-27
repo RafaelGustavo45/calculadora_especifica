@@ -1,0 +1,86 @@
+:root {
+    --primary: #2563eb;
+    --bg: #f8fafc;
+    --text: #1e293b;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilo da Navbar */
+.navbar-buttons {
+    display: flex;
+    justify-content: center; /* Centraliza os botões */
+    gap: 15px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.btn-nav {
+    text-decoration: none;
+    background-color: #e2e8f0;
+    color: var(--text);
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-nav:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Centralização do Conteúdo */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 450px;
+}
+
+h2 { margin-top: 0; color: var(--primary); }
+
+.input-group { margin-bottom: 1.2rem; }
+label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+
+input, select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+.result-area {
+    background: #f0fdf4;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    text-align: center;
+    display: none; /* Controlado pelo JS */
+}
+
+#textoInversao {
+    font-weight: 600;
+    color: #166534;
+    font-size: 1.1rem;
+}

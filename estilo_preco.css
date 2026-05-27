@@ -8,16 +8,15 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: var(--bg);
     color: var(--text);
-    display: flex;
-    justify-content: center;
     padding: 40px 20px;
+    
 }
 
 .card {
     background: white;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(116, 73, 73, 0.1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
 }
@@ -96,6 +95,7 @@ input, select {
     font-weight: 600;
     font-style: italic;
 }
+
 
 .navbar-buttons {
     display: flex;

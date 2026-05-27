@@ -1,0 +1,25 @@
+body {
+    background-color: #f8fafc;
+    background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 30px 30px; /* Efeito de grade sutil no fundo */
+}
+
+h1 {
+    letter-spacing: -1px;
+}
+
+/* Animação para os botões aparecerem suavemente */
+.btn {
+    transition: transform 0.2s, background-color 0.2s !important;
+    border-width: 2px !important;
+}
+
+.btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.2);
+}
+
+/* Ajustes finos no container */
+.container {
+    padding: 40px 20px;
+}
